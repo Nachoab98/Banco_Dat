@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>btnBocaTransfer</class>
+ <widget class="QMainWindow" name="btnBocaTransfer">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>783</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Boca-Transfer</string>
+  </property>
+  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>783</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuArchivo">
+    <property name="title">
+     <string>Archivo</string>
+    </property>
+    <addaction name="btnRegistrar_Fichajes"/>
+    <addaction name="btnReportar_fichaje"/>
+    <addaction name="btnHistorial_de_fichajes"/>
+   </widget>
+   <widget class="QMenu" name="menuAutor">
+    <property name="title">
+     <string>Autor</string>
+    </property>
+    <addaction name="actionDesarrolador"/>
+   </widget>
+   <addaction name="menuArchivo"/>
+   <addaction name="menuAutor"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionDesarrolador">
+   <property name="text">
+    <string>Desarrolador+</string>
+   </property>
+  </action>
+  <action name="btnRegistrar_Fichajes">
+   <property name="text">
+    <string>Registrar fichaje local</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="btnReportar_fichaje">
+   <property name="text">
+    <string>Reportar fichaje</string>
+   </property>
+  </action>
+  <action name="btnHistorial_de_fichajes">
+   <property name="text">
+    <string>Historial de fichajes</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
