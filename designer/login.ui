@@ -90,6 +90,9 @@ border-radius:8px</string>
      <height>21</height>
     </rect>
    </property>
+   <property name="text">
+    <string>admin</string>
+   </property>
    <property name="placeholderText">
     <string>Ingrese su usuario</string>
    </property>
@@ -102,6 +105,9 @@ border-radius:8px</string>
      <width>151</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="text">
+    <string>admin2025</string>
    </property>
    <property name="echoMode">
     <enum>QLineEdit::Password</enum>
