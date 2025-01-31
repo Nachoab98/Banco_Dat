@@ -3,7 +3,8 @@ from PyQt6.QtWidgets import QMessageBox
 from data.pais import paisData
 from data.transferencia import TransferenciaData
 from designer import registrarFichaje
-from model.movimiento import Transferencia
+from model.movimiento import Reporte, Transferencia
+from data.reporte import ReporteData
 
 class MainFichaje():
     def __init__(self):
@@ -22,7 +23,7 @@ class MainFichaje():
         self.registro.show()
     
     def abrirReportarFichaje(self):
-        self.reporte.btnAceptar.clicked.connect(self.registrarTransferencia) #se ejecuta solo cuando se interactua con el boton
+        self.reporte.btnAceptar.clicked.connect(self.reportarTransferencia) #se ejecuta solo cuando se interactua con el boton
         self.reporte.show()
         self.llenarComboPaises()
 
@@ -61,9 +62,7 @@ class MainFichaje():
                 clubOrigen= self.registro.txtClub.text(),
                 monto= float(self.registro.txtMonto.text()),
                 cuota= int(self.registro.txtCuota.text()),
-                internacional= self.registro.checkInternacional.isChecked()
-            )
-            
+                internacional= self.registro.checkInternacional.isChecked())    
         objData = TransferenciaData()
         mBox= QMessageBox()
         if objData.registrar(info = transferencia):
@@ -82,8 +81,57 @@ class MainFichaje():
 
 
 ### reportar fichaje ###
+
     def llenarComboPaises(self):
         objData = paisData()
         datos = objData.listaPaises()
         for pais in datos:
-            self.reporte.boxPais.addItem(pais[1])          
+            self.reporte.boxPais.addItem(pais[1])    
+
+    def validarCampos(self):
+        if (not self.reporte.txtNombre.text() 
+            or not self.reporte.txtApellido.text() 
+            or not self.reporte.txtDocumento.text() 
+            or  self.reporte.boxGenero.currentText() == "--- Seleccione una opcion ---" 
+            or  self.reporte.boxPais.currentText()=="--- Seleccione una opcion ---" 
+            or  self.reporte.boxDeporte.currentText()=="--- Seleccione una opcion ---" 
+            or not self.reporte.checkTerminos.isChecked()):
+            return False
+        else:    
+            return True
+    
+    def limpiarCamposReporte(self):
+        self.reporte.boxDocumento.setCurrentIndex(0)
+        self.reporte.txtDocumento.setText("")
+        self.reporte.txtNombre.setText("")
+        self.reporte.txtApellido.setText("")
+        self.reporte.boxGenero.setCurrentIndex(0)
+        self.reporte.boxDeporte.setCurrentIndex(0)
+        self.reporte.boxPais.setCurrentIndex(0)
+        self.reporte.dateFecha.setDate(1/1/2007)
+        self.reporte.checkTerminos.setChecked(False)
+
+    def reportarTransferencia(self):   
+        if not self.validarCampos():
+            mBox= QMessageBox()
+            mBox.setText("Debe completar todos los campos")
+            mBox.exec()
+        else:
+            reportado = Reporte(
+                tipo= self.reporte.boxDocumento.currentText(),
+                doc= self.reporte.txtDocumento.text(),
+                nombre= self.reporte.txtNombre.text(),
+                apellido= self.reporte.txtApellido.text(),
+                genero= self.reporte.boxGenero.currentText(),
+                deporte= self.reporte.boxDeporte.currentText(),
+                pais= self.reporte.boxPais.currentText(),
+                fecha= self.reporte.txtFecha.date().toPyDate(),
+                terminos= self.reporte.checkTerminos.isChecked())            
+            objData = ReporteData()
+            mBox= QMessageBox()
+            if objData.reportar(info = reportado):
+                mBox.setText("Reporte exitoso")
+            #self.limpiarCamposReporte()
+            else:
+                mBox.setText("Error al realizar el reporte")
+        mBox.exec()

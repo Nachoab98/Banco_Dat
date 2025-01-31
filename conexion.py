@@ -17,18 +17,6 @@ class Conexion():
             cur= self.con.cursor()
             cur.execute(sql_create_table)
             cur.close()
-            self.crearAdmin()
-
-    def crearAdmin(self):
-            try:
-                sql_insert ='''INSERT INTO usuario(nombre, usuario, clave) VALUES('administrador', 'admin', 'admin2025')'''
-                cur= self.con.cursor()
-                cur.execute(sql_insert)
-                cur.close()
-                self.con.commit()
-            except Exception as ex:
-                 print(ex)
-    
     def conectar(self):
         return self.con
                  

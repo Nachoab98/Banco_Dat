@@ -8,4 +8,6 @@ class paisData():
         self.cursor = self.db.cursor()
         resultado = self.cursor.execute("SELECT * FROM pais order by nombre")
         paises = resultado.fetchall()
+        self.cursor.close()
+        self.db.close()
         return paises
